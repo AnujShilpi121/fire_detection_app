@@ -1,0 +1,52 @@
+<!-- fireapp/templates/fireapp/index.html -->
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Forest Fire Detection</title>
+    <style>
+        body {
+            background: url("{% static bg_image %}") no-repeat center center fixed;
+            background-size: cover;
+            font-family: Arial, sans-serif;
+            color: white;
+            text-align: center;
+            padding-top: 100px;
+        }
+
+        h1 {
+            font-size: 3em;
+            text-shadow: 2px 2px 4px #000;
+        }
+
+        .button-container {
+            margin-top: 50px;
+        }
+
+        .btn {
+            padding: 15px 30px;
+            margin: 20px;
+            font-size: 1.2em;
+            border: none;
+            border-radius: 10px;
+            background-color: rgba(0, 0, 0, 0.6);
+            color: white;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .btn:hover {
+            background-color: rgba(255, 69, 0, 0.8);
+        }
+    </style>
+</head>
+<body>
+    <h1>🔥 Real-Time Forest Fire Detection</h1>
+    <div class="button-container">
+        <a href="{% url 'start_detection' %}"><button class="btn">Start Detection</button></a>
+        <a href="{% url 'show_logs' %}"><button class="btn">Show Database</button></a>
+        <a href="{% url 'delete_all_logs' %}"><button class="btn">Delete All Logs</button></a>
+    </div>
+</body>
+</html>

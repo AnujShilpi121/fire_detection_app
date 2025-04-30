@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Forest Fire Detection</title>
+    <link rel="stylesheet" href="{% static 'fireapp/css/style.css' %}">
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: url("{% static 'fireapp/images/' %}{{ bg_image }}") no-repeat center center fixed;
+            background-size: cover;
+            color: white;
+        }
+        .navbar {
+            background-color: rgba(0, 0, 0, 0.7);
+            padding: 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .navbar a {
+            color: white;
+            text-decoration: none;
+            margin-right: 20px;
+            font-weight: bold;
+        }
+        .navbar a:hover {
+            text-decoration: underline;
+        }
+        .container {
+            padding: 40px;
+        }
+        h1, h2, p {
+            text-shadow: 1px 1px 5px black;
+        }
+    </style>
+</head>
+<body>
+    <div class="navbar">
+        <div><a href="{% url 'home' %}">🌲 Fire Detection</a></div>
+        <div>
+            <a href="{% url 'start_detection' %}">Start Detection</a>
+            <a href="{% url 'show_logs' %}">View Logs</a>
+            <a href="{% url 'delete_all_logs' %}">Delete All Logs</a>
+        </div>
+    </div>
+
+    <div class="container">
+        {% block content %}{% endblock %}
+    </div>
+</body>
+</html>

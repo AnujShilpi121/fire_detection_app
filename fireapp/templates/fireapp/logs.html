@@ -1,0 +1,96 @@
+
+<!-- fireapp/templates/fireapp/logs.html -->
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Detection Logs</title>
+    <style>
+        body {
+            background: url("{% static bg_image %}") no-repeat center center fixed;
+            background-size: cover;
+            font-family: Arial, sans-serif;
+            color: white;
+            padding: 50px;
+        }
+
+        h2 {
+            text-align: center;
+            text-shadow: 2px 2px 4px #000;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background-color: rgba(0, 0, 0, 0.6);
+            margin-top: 30px;
+        }
+
+        th, td {
+            padding: 12px 15px;
+            text-align: center;
+            border: 1px solid white;
+        }
+
+        th {
+            background-color: rgba(255, 69, 0, 0.9);
+        }
+
+        .btn {
+            padding: 8px 16px;
+            margin: 10px;
+            font-size: 1em;
+            border: none;
+            border-radius: 6px;
+            background-color: rgba(255, 69, 0, 0.8);
+            color: white;
+            cursor: pointer;
+            text-decoration: none;
+        }
+
+        .btn:hover {
+            background-color: rgba(255, 99, 71, 1);
+        }
+
+        .btn-bar {
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <h2>🔥 Fire Detection Logs</h2>
+    <div class="btn-bar">
+        <a href="{% url 'home' %}" class="btn">Home</a>
+        <a href="{% url 'delete_all_logs' %}" class="btn">Delete All Logs</a>
+    </div>
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Date</th>
+                <th>Time</th>
+                <th>Duration (s)</th>
+                <th>Delete</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for log in logs %}
+            <tr>
+                <td>{{ log.0 }}</td>
+                <td>{{ log.1 }}</td>
+                <td>{{ log.2 }}</td>
+                <td>{{ log.3 }}</td>
+                <td>
+                    <a class="btn" href="{% url 'delete_log' log.0 %}">Delete</a>
+                </td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="5">No logs found.</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
+</html>

@@ -1,0 +1,48 @@
+<!-- fireapp/templates/fireapp/stream.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Live Fire Detection</title>
+    <style>
+        body {
+            background-color: black;
+            color: white;
+            text-align: center;
+            font-family: Arial, sans-serif;
+        }
+
+        h1 {
+            margin-top: 30px;
+        }
+
+        .video-container {
+            margin-top: 20px;
+        }
+
+        .btn {
+            margin-top: 20px;
+            padding: 10px 20px;
+            font-size: 1em;
+            border: none;
+            border-radius: 8px;
+            background-color: rgba(255, 69, 0, 0.8);
+            color: white;
+            cursor: pointer;
+        }
+
+        .btn:hover {
+            background-color: red;
+        }
+    </style>
+</head>
+<body>
+    <h1>🔥 Live Fire Detection Feed</h1>
+    <div class="video-container">
+        <img src="{% url 'video_feed' %}" width="50%" />
+    </div>
+    <form action="{% url 'stop_detection' %}" method="get">
+        <button class="btn" type="submit">🛑 Stop Detection</button>
+    </form>
+</body>
+</html>
