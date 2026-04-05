@@ -4,3 +4,4 @@ numpy==1.24.3
 opencv-python
 tensorflow==2.13.0
 playsound==1.2.2
+whitenoise==6.7.0
