@@ -56,7 +56,7 @@ WSGI_APPLICATION = 'fire_detection_app.wsgi.application'
 # ✅ MySQL DB using mysql-connector-python
 DATABASES = {
     'default': {
-        'ENGINE': 'mysql.connector.django',  # ✅ Not 'django.db.backends.mysql'
+        'ENGINE': 'django.db.backends.mysql',  # ✅ Not 'django.db.backends.mysql'
         'NAME': 'fire_detection_db',
         'USER': 'root',
         'PASSWORD': 'Anuj@123s',
