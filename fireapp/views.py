@@ -12,11 +12,12 @@ from django.shortcuts import render, redirect
 from tensorflow.keras.models import load_model
 from datetime import datetime
 from django.db import connection
-import threading
-import playsound
 from django.views.decorators.csrf import csrf_exempt
 
-model = load_model("forest_fire_model_20e.h5")
+# ✅ FIX: Correct model path
+model_path = os.path.join(settings.BASE_DIR, "forest_fire_model_20e.h5")
+model = load_model(model_path)
+
 labels = ["No Fire", "Fire"]
 
 fire_detected = False
@@ -34,19 +35,29 @@ def insert_fire_event(date, time, duration):
         )
 
 
+# ❌ Disabled (server pe kaam nahi karega)
 def play_alarm():
-    playsound.playsound("fireapp/static/fireapp/alarm/fire_alarm.mp3")
+    pass
 
 
 class VideoCamera:
     def __init__(self):
         self.video = cv2.VideoCapture(0)
 
+        # ✅ FIX: camera not available on server
+        if not self.video.isOpened():
+            self.video = None
+
     def __del__(self):
-        self.video.release()
+        if self.video:
+            self.video.release()
 
     def get_frame(self):
         global fire_detected, fire_start_time, fire_start_datetime
+
+        # ✅ If camera not available
+        if not self.video:
+            return None
 
         success, frame = self.video.read()
         if not success:
@@ -71,7 +82,6 @@ class VideoCamera:
                 fire_detected = True
                 fire_start_time = current_time
                 fire_start_datetime = datetime.now()
-                threading.Thread(target=play_alarm, daemon=True).start()
 
         else:
             if fire_detected:
@@ -80,7 +90,6 @@ class VideoCamera:
                 fire_date = fire_start_datetime.strftime("%Y-%m-%d")
                 fire_clock_time = fire_start_datetime.strftime("%H:%M:%S")
 
-                # ✅ FIXED: Use Django DB
                 insert_fire_event(fire_date, fire_clock_time, duration)
 
         ret, jpeg = cv2.imencode('.jpg', frame)
@@ -122,7 +131,6 @@ def home(request):
     return render(request, 'fireapp/index.html', {'bg_image': selected_image})
 
 
-# ✅ FIXED: Fetch logs using Django DB
 def show_logs(request):
     with connection.cursor() as cursor:
         cursor.execute("SELECT * FROM FireEvents")
@@ -137,7 +145,6 @@ def show_logs(request):
     return render(request, 'fireapp/logs.html', {'logs': rows, 'bg_image': selected_image})
 
 
-# ✅ FIXED delete
 def delete_log(request, id):
     with connection.cursor() as cursor:
         cursor.execute("DELETE FROM FireEvents WHERE id = %s", [id])
