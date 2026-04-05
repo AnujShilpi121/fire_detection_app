@@ -1,0 +1,7 @@
+Django==5.2.6
+gunicorn==25.3.0
+numpy
+opencv-python
+tensorflow==2.20.0
+mysqlclient
+playsound==1.2.2
